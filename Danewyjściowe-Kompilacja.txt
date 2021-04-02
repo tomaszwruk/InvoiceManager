@@ -1,0 +1,4 @@
+﻿Rozpoczęto kompilację...
+1>------ Kompilacja rozpoczęta: Projekt: InvoiceManager, Konfiguracja: Release Any CPU ------
+1>  InvoiceManager -> E:\Projekty\C#\InvoiceManager\bin\InvoiceManager.dll
+========== Kompilacja: 1 zakończono powodzeniem, 0 zakończono niepowodzeniem, 0 zaktualizowano, 0 pominięto ==========
