@@ -15,7 +15,7 @@ namespace InvoiceManager.Controllers
     {
         private InvoiceRepository _invoiceRepository = new InvoiceRepository();
         private ClientRepository _clientRepository = new ClientRepository();
-        private ProductRepository _productRepository;
+        private ProductRepository _productRepository = new ProductRepository();
 
         public ActionResult Index()
         {

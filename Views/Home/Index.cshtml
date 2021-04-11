@@ -41,7 +41,7 @@
                     <td>@invoice.PaymentDate.ToString("dd-MM-yyyy")</td>
                     <td>
                         <button class="btn btn-danger btn-sm"
-                                onclick="deleteInvoice()">
+                                onclick="deleteInvoice('@invoice.Id', this)">
                             <!--wywołujemy skrypt java Ajax żeby nie przeładowywać strony-->
                             Usuń
                         </button>
@@ -62,9 +62,36 @@ else
 @section Scripts
 {
     <script type="text/javascript">
-        function deleteInvoice() {
+        function deleteInvoice(id, btn) {
             if (!confirm("Czy na pewno chcesz usunąć fakturę?"))
                 return;
+            $.ajax({
+                //usuwanie z bazy a poniżej z koduhtml
+                type: 'POST',
+                url: "@Url.Action("Delete", "Home")",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.success) {
+                        //usuwanie
+                        var row = btn.parentNode.parentNode; //2 x parNode ponieważ 1 w tabeli to td potem tr czyli cały node
+                        row.parentNode.removeChild(row); //znów poziom wyżej i ten rodzic usuwa swoje diecko czyli cały wiersz w html
+
+                    } else {
+                        alert(data.Meesage);
+                    }
+
+                },
+                error: function (data) {
+                    if (data.success) {
+
+                    } else {
+                        alert(data.Meesage);
+                    }
+                },
+                dataType: 'json',
+            });
         }
 
     </script>

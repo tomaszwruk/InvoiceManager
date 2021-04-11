@@ -109,9 +109,41 @@
 
         };
 
-        function deleteInvoicePosition() {
+        function deleteInvoicePosition(id, invoiceId, btn) {
             if (!confirm("Cz na pewno chcesz usunąć pozycję?"))
-                return
+                return;
+            $.ajax({
+                //usuwanie z bazy a poniżej z koduhtml
+                type: 'POST',
+                url: "@Url.Action("DeletePosition", "Home")",
+                data: {
+                    id: id,
+                    invoiceId: invoiceId
+                },
+                success: function (data) {
+                    if (data.success) {
+                        //usuwanie
+                        var row = btn.parentNode.parentNode; //2 x parNode ponieważ 1 w tabeli to td potem tr czyli cały node
+                        row.parentNode.removeChild(row); //znów poziom wyżej i ten rodzic usuwa swoje diecko czyli cały wiersz w html
+
+                        //przelicz wartość fakt
+                        var invoiceVal = data.invoiceValue;
+                        $('#Invoice_Value').val(invoiceVal.toFixed(2).replace(".", ",")); //odnośmimy się do textboxa z wartością fv, _ zastepujr kropke
+
+                    } else {
+                        alert(data.Meesage);
+                    }
+
+                },
+                error: function (data) {
+                    if (data.success) {
+
+                    } else {
+                        alert(data.Meesage);
+                    }
+                },
+                dataType: 'json',
+            });
         };
 
         $(document).ready(function () {
