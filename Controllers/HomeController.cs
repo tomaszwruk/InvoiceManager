@@ -156,6 +156,7 @@ namespace InvoiceManager.Controllers
             {
 
                 return Json(new { Success = false, Message = exception.Message });
+                
             }
 
             return Json(new { Success = true });
