@@ -187,6 +187,7 @@ namespace InvoiceManager.Controllers
         {
             var userId = User.Identity.GetUserId();//dla bezpieczeństwa lepiej zawsze czytać na nowo usera z bazy
             var product = _productRepository.GetProduct(invoicePosition.ProductId);
+            invoicePosition.Product = product;
             invoicePosition.Value = invoicePosition.Quantity * product.Value;
 
             if (invoicePosition.Id == 0)

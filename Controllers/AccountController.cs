@@ -149,7 +149,7 @@ namespace InvoiceManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            int a = 5;
+            //int a = 5;
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser

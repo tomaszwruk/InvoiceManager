@@ -114,7 +114,7 @@ namespace InvoiceManager.Models.Repositories
                 positionToUpodate.Lp = invoicePosition.Lp;
                 positionToUpodate.ProductId = invoicePosition.ProductId;
                 positionToUpodate.Quantity = invoicePosition.Quantity;
-                positionToUpodate.Value = invoicePosition.Product.Value * invoicePosition.Value;
+                positionToUpodate.Value = invoicePosition.Product.Value * invoicePosition.Quantity;
 
                 context.SaveChanges();
             };

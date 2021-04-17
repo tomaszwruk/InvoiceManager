@@ -113,7 +113,7 @@
             if (!confirm("Cz na pewno chcesz usunąć pozycję?"))
                 return;
             $.ajax({
-                //usuwanie z bazy a poniżej z koduhtml
+                //usuwanie z bazy a poniżej z kodu html
                 type: 'POST',
                 url: "@Url.Action("DeletePosition", "Home")",
                 data: {

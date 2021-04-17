@@ -17,6 +17,7 @@ namespace InvoiceManager.Models.Domains
 
         [Display(Name = "Produkt")]
         public int ProductId { get; set; }
+
         [Display(Name = "Ilość")]
         public int Quantity { get; set; }
 
