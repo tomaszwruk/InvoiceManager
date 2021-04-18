@@ -132,6 +132,17 @@ namespace InvoiceManager.Controllers
             var userId = User.Identity.GetUserId();//dla bezpieczeństwa lepiej zawsze czytać na nowo usera z bazy
             invoice.UserId = userId;
 
+            //walidacja danych robimy przez ModeState
+            if (!ModelState.IsValid)
+            {
+                //przygotuj model dla widoku i wyśli fakturę oraz usera
+
+                var vm = PrepareInvoiceVm(invoice, userId);
+                //zwróć view Invoice oczywiście dla GET, nie dla POST
+                return View("Invoice", vm);
+
+            }
+
             if (invoice.Id == 0)
             {
                 _invoiceRepository.Add(invoice);
@@ -189,6 +200,18 @@ namespace InvoiceManager.Controllers
             var product = _productRepository.GetProduct(invoicePosition.ProductId);
             invoicePosition.Product = product;
             invoicePosition.Value = invoicePosition.Quantity * product.Value;
+
+            //walidacja danych robimy przez ModeState
+            //wymagania co do walidacji sa opisane w modelu np Required
+            if (!ModelState.IsValid)
+            {
+                //przygotuj model dla widoku i wyśli poz fakturę oraz usera
+
+                var vm = PrepareInvoicePositionVm(invoicePosition);
+                //zwróć view invoicePosition oczywiście dla GET, nie dla POST
+                return View("InvoicePosition", vm);
+
+            }
 
             if (invoicePosition.Id == 0)
             {
