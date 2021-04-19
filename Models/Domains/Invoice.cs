@@ -17,7 +17,7 @@ namespace InvoiceManager.Models.Domains
 
         public int Id { get; set; }
 
-        [Required] //Title jest wymagane tak zeby nie było nulla, przy int nie trzeba pisać domyśnie będzie not null
+        [Required(ErrorMessage = "Pole Tytuł jest wymagane")] //Title jest wymagane tak zeby nie było nulla, przy int nie trzeba pisać domyśnie będzie not null
                    //ten znacznik robimy zamiast konfiguracji tabeli w entity
         [Display(Name ="Tytuł")]
         public string Title { get; set; }
@@ -25,6 +25,7 @@ namespace InvoiceManager.Models.Domains
         [Display(Name = "Wartość")]
         public decimal Value { get; set; }
 
+        [Required(ErrorMessage = "Pole Sposób płatności jest wymagane")]
         [Display(Name = "Sposób płatności")]
         public int MethodOfPaymentId { get; set; }
 
