@@ -13,7 +13,10 @@
                     new { invoiceId = Model.Invoice.Id })"'>
         Dodaj pozycję
     </button>
-    <button class="btn btn-secondary mb-3" onclick="generatePdf()">Generuj PDF</button>
+
+    <button class="btn btn-secondary mb-3" onclick="generatePdf()">
+        Generuj PDF
+    </button>
 }
 
 <div class="row">
@@ -22,6 +25,7 @@
         <!--Formularz z przyciskiem submit-->
         @using (Html.BeginForm("Invoice", "Home"))
         {
+            @Html.AntiForgeryToken()
             <!-- wyświtla podsumowanie dla walidacji danych -->
             <!-- Html.ValidationSummary();-->
 
@@ -62,8 +66,6 @@
                     @Html.LabelFor(x => x.Invoice.Value)
                     @Html.TextBoxFor(x => x.Invoice.Value,
                             new { @class = "form-control", @readonly = "readonly" })
-                    <!-- wiadomość walidacyjną danych można przekazać poprzez helper HTML-->
-                    @Html.ValidationMessageFor(x => x.Invoice.Value)
                 </div>
             }
             <div class="form-group">
@@ -120,19 +122,20 @@
 {
     <script type="text/javascript">
         function generatePdf() {
-                      
+
             $.ajax({
                 type: 'POST',
                 url: "@Url.Action("InvoiceToPdf", "Print")",
                 data: {
-                    id: '@Model.Invoice.Id'                    
+                    id: '@Model.Invoice.Id'
                 },
                 success: function (data) {
-                           window.location = '@Url.Action("DownloadInvoicePdf", "Print")'+'?fileGuid=' + data.FileGuid + '&fileName=' + data.FileName;
+                    
+                    window.location = '@Url.Action("DownloadInvoicePdf", "Print")' + '?fileGuid=' + data.FileGuid + '&fileName=' + data.FileName;
 
                 },
-                error: function (data) {                   
-                        alert(data.Meesage);                    
+                error: function (data) {
+                        alert(data.Meesage);
                 },
                 dataType: 'json',
                 cache: false
@@ -175,7 +178,7 @@
                 },
                 dataType: 'json',
             });
-        }
+        };
         //jeśli dokument zostanie załadowany i gotowy
         $(document).ready(function () {
             //formatowanie danych lokalnych:
@@ -184,7 +187,7 @@
             }
 
             $.validator.methods.date = function (value, element) {
-                var isChrom = /Chrom/.test(navigator.userAgent) && Google Inc/.test(navigator.vendor);
+                var isChrom = /Chrom/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
                 if (isChrom) {
                     var d = new Date();
                     return this.optional(element) || !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)));
